@@ -38,3 +38,23 @@ public:
         return true;
     }
 };
+
+class Solution2{
+public:
+    vector <int> v1,v2;
+    void inorder(TreeNode* root,vector <int> &v){
+        if(root==nullptr)
+            return;
+        inorder(root->left,v);
+        if((root->left==NULL) && (root->right==NULL))
+            v.push_back(root->val);
+        inorder(root->right,v);
+    }
+    
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        inorder(root1,v1);
+        inorder(root2,v2);
+        
+        return (v1==v2)?true:false;
+    }
+};
