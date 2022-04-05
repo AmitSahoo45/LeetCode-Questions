@@ -14,21 +14,17 @@ struct TreeNode
 class Solution
 {
 public:
-    TreeNode *root = NULL;
-    TreeNode *insertion(vector<int> v, TreeNode *root)
-    {
-        if (v.size() == 0)
-            return NULL;
-
-        auto it = find(v.begin(), v.end(), *max_element(v.begin(), v.end()));
-        root->val = *it;
-        v.erase(it);
-
-        insertion()
-    }
-
     TreeNode *constructMaximumBinaryTree(vector<int> &n)
     {
+        if (n.size() == 0)
+            return NULL;
+        auto it = max_element(n.begin(), n.end());
+        TreeNode *root = new TreeNode(*it);
+        vector<int> leftwala(n.begin(), it);
+        vector<int> rightwala(it + 1, n.end());
+        root->left = constructMaximumBinaryTree(leftwala);
+        root->right = constructMaximumBinaryTree(rightwala);
+        return root;
     }
 };
 
