@@ -17,18 +17,31 @@ struct TreeNode
 };
 
 class Solution
-{
+{ 
 public:
+    unordered_map<TreeNode *, int> um;
     int rob(TreeNode *root)
     {
         if (!root)
             return 0;
-        int val = root->val;
+        if (!root->left && !root->right)
+            return root->val;
+        if (um.count(root))
+            return um[root];
+        int one = root->val;
         if (root->left)
-            val += rob(root->left->left) + rob(root->left->right);
+        {
+            one += rob(root->left->left);
+            one += rob(root->left->right);
+        }
         if (root->right)
-            val += rob(root->right->left) + rob(root->right->right);
-        return max(val, rob(root->left) + rob(root->right));
+        {
+            one += rob(root->right->left);
+            one += rob(root->right->right);
+        }
+        int two = rob(root->left) + rob(root->right);
+        um[root] = max(one, two);
+        return max(one, two);
     }
 };
 
